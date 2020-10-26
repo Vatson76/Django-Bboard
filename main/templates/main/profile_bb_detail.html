@@ -1,0 +1,40 @@
+{% extends "layout/basic.html" %}
+
+{% load static %}
+
+{% block title %} {{ bb.title }} - {{ bb.rubric.name }}{% endblock %}
+
+{% block content %}
+<p class="text-right mt-2">
+    <a href="{% url 'main:profile_bb_change' pk=bb.pk %}">Изменить объявление</a>
+    <a href="{% url 'main:profile_bb_delete' pk=bb.pk %}">Удалить объявление</a>
+</p>
+<div class="container-fluid mt-3">
+    <div class="row">
+        {% if bb.image %}
+        <div class="col-md-auto">
+            <img src="{{ bb.image.url }}" class="main-image">
+        </div>
+        {% endif %}
+        <div class="col">
+            <h2>{{ bb.title }}</h2>
+            <p>{{ bb.content }}</p>
+            <p class="font-weight-bold">{{ bb.price }} руб.</p>
+            <p>{{ bb.contacts }}</p>
+            <p class="text-right font-italic">Объявление добавлено {{ bb.created_at }}</p>
+        </div>
+    </div>
+</div>
+{% if ais %}
+<div class="d-flex justify-content-between flex-wrap mt-5">
+    {% for ai in ais %}
+    <div>
+        <img class="additional-image" src="{{ ai.image.url }}" style="width: 180;">
+    </div>
+    {% endfor %}
+</div>
+
+{% endif %}
+<p><a href="{% url 'main:by_rubric' pk=bb.rubric.pk %}{{ all }}">Назад</a></p>
+
+{% endblock %}
